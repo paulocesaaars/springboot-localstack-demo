@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+
+  localstack:
+    container_name: localstack
+    image: localstack/localstack
+    ports:
+      - 4566:4566
+    environment:
+      - DATA_DIR=/tmp/localstack/data
+      - LAMBDA_EXECUTOR=docker
+      - SERVICES=secretsmanager,sqs,sns,dynamodb
+      - EXTRA_CORS_ALLOWED_ORIGNS=https://app.localstack.cloud
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+    
